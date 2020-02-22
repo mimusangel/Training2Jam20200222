@@ -1,0 +1,11 @@
+Voici une piqure de rappel de git!
+- **git clone "url" [folder]** : Copier le repo en local
+- **git checkout "branch"** : Changer de branch
+- **git branch "branch"** : Creer une branch
+- **git checkout -b "branch"** : Creer et Changer de Branch
+- **git pull** : Récupérer et intégrer le repo sur le local existant
+- **git status** : Voir la difference entre le local et le repo 
+- **git add "file or dir"** : Ajouter un fichier dans l'envoie
+- **git commit -m"msg"** : Ajouter un message a l'envoie
+- **git push [origin branch]** : Envoyer les modification
+- **git merge "branch"** : Fusion la branch "branch" dans la branch courante
