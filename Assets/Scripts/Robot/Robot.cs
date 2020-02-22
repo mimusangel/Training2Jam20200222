@@ -21,32 +21,80 @@ public class Robot : MonoBehaviour
 			robot.transform.rotation = rotation;
 		}
 	}
+	public enum Statestype
+	{
+		None,
+		Error
+	}
 
+
+	public Rigidbody robotRigidbody;
 	OriginalData origin;
 	Coroutine routine;
 
 	public List<States> program = new List<States>();
+	public Statestype type { get; private set; } = Statestype.None;
+
+	public bool isError
+	{
+		get
+		{
+			return type == Statestype.Error;
+		}
+	}
+
+	public bool forwardIsBlocked = false;
+
+	public static Robot focusedRobot = null;
 
 	void Start()
     {
+		robotRigidbody = GetComponent<Rigidbody>();
+
 		origin = new OriginalData();
 		origin.Save(this);
 
 		program.Add(new StatesForward());
-		program.Add(new StatesRotate());
+		BlockDetectCollider detect = new BlockDetectCollider();
+		Block blockTrue = new Block(BlockType.Bool, true);
+		OpEqual equal = new OpEqual(detect, blockTrue);
+		StatesIf sIf = new StatesIf(equal);
+		sIf.ifProgram.Add(new StatesRotate());
+		program.Add(sIf);
 		program.Add(new StatesForward());
-		program.Add(new StatesRotate(-90.0f));
-		program.Add(new StatesForward());
-		program.Add(new StatesRotate());
-		program.Add(new StatesBackward());
 
+
+	}
+
+	private void Update()
+	{
+		forwardIsBlocked = false;
+		Collider[] colliders = Physics.OverlapBox(transform.position + transform.forward + Vector3.up * 0.6f, Vector3.one * 0.25f);
+		forwardIsBlocked = colliders.Length > 0;
+		
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawWireCube(transform.position + transform.forward + Vector3.up * 0.6f, Vector3.one * 0.25f);
 	}
 
 	IEnumerator Execute()
 	{
+		type = Statestype.None;
 		foreach (States state in program)
 		{
+			if (focusedRobot == this) UIMenu.Instance.stateText.text = state.ToString();
 			yield return state.Execute(this);
+			if (type == Statestype.Error)
+			{
+				if (focusedRobot == this) UIMenu.Instance.stateText.text = "Error!";
+				break;
+			}
+		}
+		if (type != Statestype.Error)
+		{
+			if (focusedRobot == this) UIMenu.Instance.stateText.text = "End Program!";
 		}
 	}
 
@@ -67,5 +115,11 @@ public class Robot : MonoBehaviour
 			StopCoroutine(routine);
 			routine = null;
 		}
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		type = Statestype.Error;
+		Debug.Log("Collision, Fin de du programme");
 	}
 }

@@ -12,6 +12,16 @@ public class UIRobotProg : MonoBehaviour
 
 	public Robot robot = null;
 
+	public static bool isOpen
+	{
+		get
+		{
+			if (Instance)
+				return Instance.gameObject.activeSelf;
+			return false;
+		}
+	}
+
 	private void Awake()
 	{
 		if (Instance == null)

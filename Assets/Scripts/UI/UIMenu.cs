@@ -14,6 +14,7 @@ public class UIMenu : MonoBehaviour
 
 	public TextMeshProUGUI btnControlText;
 	public Button resetButton;
+	public TextMeshProUGUI stateText;
 
 	private void Awake()
 	{
@@ -25,6 +26,8 @@ public class UIMenu : MonoBehaviour
 
 	private void Start()
 	{
+		UIMenu.Instance.stateText.text = "";
+
 		foreach (GameObject reset in resetList)
 		{
 			reset.SendMessage("ResetObject");
@@ -41,6 +44,7 @@ public class UIMenu : MonoBehaviour
 	{
 		if (!isPlayMode)
 		{
+			stateText.text = "";
 			foreach (GameObject reset in resetList)
 			{
 				reset.SendMessage("ResetObject");
@@ -67,6 +71,7 @@ public class UIMenu : MonoBehaviour
 		else
 		{
 			btnControlText.text = "Stop";
+			stateText.text = "";
 			foreach (GameObject reset in resetList)
 			{
 				reset.SendMessage("ResetObject");

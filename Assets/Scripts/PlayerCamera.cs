@@ -15,7 +15,9 @@ public class PlayerCamera : MonoBehaviour
 	
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+		if (UIRobotProg.isOpen) return;
+
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
 		{
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
@@ -24,6 +26,7 @@ public class PlayerCamera : MonoBehaviour
 				Robot robot = hit.collider.gameObject.GetComponent<Robot>();
 				if (robot)
 				{
+					Robot.focusedRobot = robot;
 					UIRobotProg.Instance.Show(robot);
 				}
 			}

@@ -13,14 +13,17 @@ public class StatesRotate : States
 
 	public override IEnumerator Execute(Robot robot)
 	{
-		Quaternion A = robot.transform.rotation;
-		Quaternion B = A * Quaternion.AngleAxis(rotate, Vector3.up);
+		Quaternion origin = robot.transform.rotation;
+
+		float t = (0.5f * Mathf.Abs(rotate)) / 90.0f;
+		float percent = 0.0f;
 		float time = Time.time;
-		while (robot.transform.rotation != B)
+		
+		while (percent <= 1.0f)
 		{
 			float elapse = Time.time - time;
-			float percent = elapse / 0.5f;
-			robot.transform.rotation = Quaternion.Lerp(A, B, percent);
+			percent = elapse / t;
+			robot.transform.rotation = origin * Quaternion.AngleAxis(rotate * percent, Vector3.up);
 			yield return null;
 		}
 	}

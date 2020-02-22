@@ -21,7 +21,7 @@ public class StatesForward : States
 		float t = distance / mPerSec;
 		float time = Time.time;
 
-		while (robot.transform.position != B)
+		while (robot.transform.position != B && !robot.isError)
 		{
 			float elapse = Time.time - time;
 			float percent = elapse / t;

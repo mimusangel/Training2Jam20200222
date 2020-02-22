@@ -20,8 +20,7 @@ public class StatesBackward: States
 		float mPerSec = 1.389f;
 		float t = distance / mPerSec;
 		float time = Time.time;
-
-		while (robot.transform.position != B)
+		while (robot.transform.position != B && !robot.isError)
 		{
 			float elapse = Time.time - time;
 			float percent = elapse / t;
