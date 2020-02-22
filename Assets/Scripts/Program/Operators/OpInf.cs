@@ -8,7 +8,7 @@ public class OpInf : Operator
 	public Block A;
 	public Block B;
 
-	public OpInf(Block a, Block b)
+	public OpInf(Block a = null, Block b = null)
 	{
 		A = a;
 		B = b;
@@ -16,6 +16,7 @@ public class OpInf : Operator
 
 	public override bool Execute(Robot robot)
 	{
+		if (A == null || B == null) return false;
 		if (A.type == B.type)
 		{
 			switch (A.type)

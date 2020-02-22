@@ -8,7 +8,7 @@ public class OpEqual : Operator
 	public Block A;
 	public Block B;
 
-	public OpEqual(Block a, Block b)
+	public OpEqual(Block a = null, Block b = null)
 	{
 		A = a;
 		B = b;
@@ -16,6 +16,7 @@ public class OpEqual : Operator
 
 	public override bool Execute(Robot robot)
 	{
+		if (A == null || B == null) return false;
 		if (A.type == B.type)
 		{
 			switch (A.type)

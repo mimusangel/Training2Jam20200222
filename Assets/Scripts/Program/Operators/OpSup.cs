@@ -8,7 +8,7 @@ public class OpSup: Operator
 	public Block A;
 	public Block B;
 
-	public OpSup(Block a, Block b)
+	public OpSup(Block a = null, Block b = null)
 	{
 		A = a;
 		B = b;
@@ -16,6 +16,7 @@ public class OpSup: Operator
 
 	public override bool Execute(Robot robot)
 	{
+		if (A == null || B == null) return false;
 		if (A.type == B.type)
 		{
 			switch (A.type)

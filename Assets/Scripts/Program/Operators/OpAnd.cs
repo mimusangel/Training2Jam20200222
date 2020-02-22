@@ -8,7 +8,7 @@ public class OpAnd : Operator
 	public Operator A;
 	public Operator B;
 
-	public OpAnd(Operator a, Operator b)
+	public OpAnd(Operator a = null, Operator b = null)
 	{
 		A = a;
 		B = b;
@@ -16,6 +16,7 @@ public class OpAnd : Operator
 
 	public override bool Execute(Robot robot)
 	{
+		if (A == null || B == null) return false;
 		return A.Execute(robot) && B.Execute(robot);
 	}
 }

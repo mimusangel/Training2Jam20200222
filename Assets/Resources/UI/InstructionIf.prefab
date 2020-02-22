@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 1445528936326018561}
   - component: {fileID: 1445528936326018560}
   m_Layer: 5
-  m_Name: InstructionIf 1
+  m_Name: InstructionIf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
