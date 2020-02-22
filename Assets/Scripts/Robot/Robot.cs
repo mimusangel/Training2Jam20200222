@@ -27,12 +27,14 @@ public class Robot : MonoBehaviour
 		Error
 	}
 
+	public static Robot focusedRobot = null;
+
 
 	public Rigidbody robotRigidbody;
 	OriginalData origin;
 	Coroutine routine;
 
-	public List<States> program = new List<States>();
+	public Dictionary<string, List<States>> programs = new Dictionary<string, List<States>>();
 	public Statestype type { get; private set; } = Statestype.None;
 
 	public bool isError
@@ -45,25 +47,14 @@ public class Robot : MonoBehaviour
 
 	public bool forwardIsBlocked = false;
 
-	public static Robot focusedRobot = null;
-
 	void Start()
     {
 		robotRigidbody = GetComponent<Rigidbody>();
 
 		origin = new OriginalData();
 		origin.Save(this);
-
-		program.Add(new StatesForward());
-		BlockDetectCollider detect = new BlockDetectCollider();
-		Block blockTrue = new Block(BlockType.Bool, true);
-		OpEqual equal = new OpEqual(detect, blockTrue);
-		StatesIf sIf = new StatesIf(equal);
-		sIf.ifProgram.Add(new StatesRotate());
-		program.Add(sIf);
-		program.Add(new StatesForward());
-
-
+		
+		NewProgram("main");
 	}
 
 	private void Update()
@@ -82,15 +73,23 @@ public class Robot : MonoBehaviour
 	IEnumerator Execute()
 	{
 		type = Statestype.None;
-		foreach (States state in program)
+		if (programs.ContainsKey("main"))
 		{
-			if (focusedRobot == this) UIMenu.Instance.stateText.text = state.ToString();
-			yield return state.Execute(this);
-			if (type == Statestype.Error)
+			foreach (States state in GetProgram("main"))
 			{
-				if (focusedRobot == this) UIMenu.Instance.stateText.text = "Error!";
-				break;
+				if (focusedRobot == this) UIMenu.Instance.stateText.text = state.ToString();
+				yield return state.Execute(this);
+				if (type == Statestype.Error)
+				{
+					if (focusedRobot == this) UIMenu.Instance.stateText.text = "Error!";
+					break;
+				}
 			}
+		}
+		else
+		{
+			type = Statestype.Error;
+			if (focusedRobot == this) UIMenu.Instance.stateText.text = "Main Program Not exist!";
 		}
 		if (type != Statestype.Error)
 		{
@@ -122,4 +121,56 @@ public class Robot : MonoBehaviour
 		type = Statestype.Error;
 		Debug.Log("Collision, Fin de du programme");
 	}
+
+	public List<string> GetProgramNameList()
+	{
+		return new List<string>(programs.Keys);
+	}
+
+	public List<States> GetProgram(string key)
+	{
+		key = key.ToLower();
+		if (programs.ContainsKey(key))
+			return programs[key];
+		return new List<States>();
+	}
+
+	public void NewProgram(string programName)
+	{
+		programs.Add(programName.ToLower(), new List<States>());
+	}
+
+	public void AddInstruction(string programName, States states, int index = -1)
+	{
+		programName = programName.ToLower();
+		if (programs.ContainsKey(programName))
+		{
+			if (index >= 0 && index < programs[programName].Count)
+			{
+				programs[programName].Insert(index, states);
+			}
+			else
+			{
+				programs[programName].Add(states);
+			}
+		}
+	}
+
+	public void DeleteProgram(string programName)
+	{
+		programName = programName.ToLower();
+		programs.Remove(programName);
+		if (programName.Equals("main"))
+			NewProgram(programName);
+	}
+
+	public void DeleteInstruction(string programName, States states)
+	{
+		programName = programName.ToLower();
+		if (programs.ContainsKey(programName))
+		{
+			programs[programName].Remove(states);
+		}
+	}
+	
 }
