@@ -22,5 +22,17 @@ public class StatesIf : States
 			}
 		}
 	}
+
+	public void AddInstruction(States state, int index)
+	{
+		if (index >= 0 && index < ifProgram.Count)
+		{
+			ifProgram.Insert(index, state);
+		}
+		else
+		{
+			ifProgram.Add(state);
+		}
+	}
 }
 

@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Linq;
 
-public class UIFonction : MonoBehaviour, IDropHandler
+public class UIInstructionThen : MonoBehaviour, IDropHandler
 {
-	public TextMeshProUGUI textInstruction;
+	public UIInstructionIfThen ifThen;
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(-1/*, transform.parent*/);
+		UIRobotProg.Instance.DropInstruction(ifThen.states/*, ifThen.transform.parent*/);
 	}
 }

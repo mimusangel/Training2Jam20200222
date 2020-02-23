@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 1445528935893026133}
   - component: {fileID: 1445528935893026128}
   - component: {fileID: 1445528935893026131}
+  - component: {fileID: 121134943770160796}
   m_Layer: 5
   m_Name: InstructionTop
   m_TagString: Untagged
@@ -273,6 +274,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &121134943770160796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445528935893026135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a6e44e8e9753a499d0411cc30f36ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ifThen: {fileID: 7341486034709122269}
 --- !u!1 &1445528936157561088
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +298,7 @@ GameObject:
   - component: {fileID: 1445528936157561089}
   - component: {fileID: 1445528936157561103}
   - component: {fileID: 1445528936157561102}
+  - component: {fileID: 1859360549117694865}
   m_Layer: 5
   m_Name: InstructionDown
   m_TagString: Untagged
@@ -347,6 +362,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1859360549117694865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445528936157561088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4543aaf92c2014db4688a83237e727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ifThen: {fileID: 7341486034709122269}
 --- !u!1 &1445528936326018562
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +386,7 @@ GameObject:
   - component: {fileID: 1445528936326018563}
   - component: {fileID: 1445528936326018561}
   - component: {fileID: 1445528936326018560}
+  - component: {fileID: 7341486034709122269}
   m_Layer: 5
   m_Name: InstructionIf
   m_TagString: Untagged
@@ -426,6 +455,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &7341486034709122269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445528936326018562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787c0e0c708319e40896524deda7d5f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentTransform: {fileID: 1445528937449815979}
+  uIOperator: {fileID: 321732345}
 --- !u!1 &1445528936639832741
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +637,7 @@ GameObject:
   - component: {fileID: 1445528936659548429}
   - component: {fileID: 1445528936659548428}
   - component: {fileID: 1445528936659548427}
+  - component: {fileID: 321732345}
   m_Layer: 5
   m_Name: Operator
   m_TagString: Untagged
@@ -683,10 +727,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 2
-    m_Right: 2
-    m_Top: 2
-    m_Bottom: 2
+    m_Left: 1
+    m_Right: 1
+    m_Top: 1
+    m_Bottom: 1
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -695,6 +739,20 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &321732345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445528936659548430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dfc7822cdf7fb948b0482e854064522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  link: {fileID: 1445528936326018562}
+  index: 0
 --- !u!1 &1445528937449815978
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +766,7 @@ GameObject:
   - component: {fileID: 1445528937449815976}
   - component: {fileID: 1445528937449815959}
   - component: {fileID: 1445528937449815958}
+  - component: {fileID: 1076934749}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -810,3 +869,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
+--- !u!114 &1076934749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445528937449815978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f4e667b9ec15e4bbe010c0a7e86ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ifThen: {fileID: 7341486034709122269}

@@ -14,6 +14,14 @@ public class UIInstruction : MonoBehaviour, IDropHandler
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(states);
+		UIInstructionIfContent content = transform.parent.gameObject.GetComponent<UIInstructionIfContent>();
+		if (content)
+		{
+			UIRobotProg.Instance.DropInstruction(content.ifThen, states);
+		}
+		else
+		{
+			UIRobotProg.Instance.DropInstruction(states);
+		}
 	}
 }

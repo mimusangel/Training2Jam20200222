@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Linq;
 
-public class UIFonction : MonoBehaviour, IDropHandler
+
+public class UIOperator : MonoBehaviour, IDropHandler
 {
-	public TextMeshProUGUI textInstruction;
+	public GameObject link;
+	public int index = 0;
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(-1/*, transform.parent*/);
+		link.SendMessage("DropOperator", index);
 	}
+
 }
