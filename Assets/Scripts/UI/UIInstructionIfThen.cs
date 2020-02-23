@@ -9,6 +9,7 @@ using System.Linq;
 public class UIInstructionIfThen : MonoBehaviour
 {
 	public Transform contentTransform;
+	public Transform contentElseTransform;
 	public UIOperator uIOperator;
 
 	[HideInInspector]
@@ -42,6 +43,17 @@ public class UIInstructionIfThen : MonoBehaviour
 			if (go != null)
 			{
 				contentItems.Add(go);
+			}
+		}
+		if (states.GetType() == typeof(StatesIfElse) && contentElseTransform != null)
+		{
+			foreach (States state in (states as StatesIfElse).elseProgram)
+			{
+				GameObject go = UIRobotProg.Instance.MakeGameObject(state, contentElseTransform);
+				if (go != null)
+				{
+					contentItems.Add(go);
+				}
 			}
 		}
 	}

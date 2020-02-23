@@ -5,4 +5,5 @@ using UnityEngine;
 public class UIInstructionIfContent : MonoBehaviour
 {
 	public UIInstructionIfThen ifThen;
+	public bool isElse = false;
 }

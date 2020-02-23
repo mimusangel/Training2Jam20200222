@@ -21,12 +21,26 @@ public class StatesForward : States
 		float t = distance / mPerSec;
 		float time = Time.time;
 
+		bool moveWithBox = false;
+		if (robot.box)
+		{
+			Vector3 bPos = robot.box.transform.position;
+			bPos.y = A.y;
+			float distance = Vector3.Distance(bPos, A);
+			moveWithBox = distance <= 1.0f;
+		}
 		while (robot.transform.position != B && !robot.isError)
 		{
 			float elapse = Time.time - time;
 			float percent = elapse / t;
 			robot.transform.position = Vector3.Lerp(A, B, percent);
-			yield return null;
+			if (robot.box && moveWithBox)
+			{
+				Vector3 boxPos = robot.transform.position + robot.transform.forward;
+				boxPos.y = robot.box.transform.position.y;
+				robot.box.transform.position = boxPos;
+			}
+			yield return new WaitForEndOfFrame();
 		}
 	}
 }

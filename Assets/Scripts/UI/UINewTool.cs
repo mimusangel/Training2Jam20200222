@@ -30,7 +30,8 @@ public class UINewTool : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		B_True = 200,
 		B_False,
 		B_DetectCollid,
-		B_DetectColor
+		B_DetectColor,
+		B_Color
 	}
 
 	public static Tool ToolDragAndDrop = Tool.None;

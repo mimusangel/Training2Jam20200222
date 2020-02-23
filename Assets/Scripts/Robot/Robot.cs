@@ -46,6 +46,8 @@ public class Robot : MonoBehaviour
 	}
 
 	public bool forwardIsBlocked = false;
+	public LayerMask colliderMask;
+	public Rigidbody box = null;
 
 	void Start()
     {
@@ -60,9 +62,14 @@ public class Robot : MonoBehaviour
 	private void Update()
 	{
 		forwardIsBlocked = false;
-		Collider[] colliders = Physics.OverlapBox(transform.position + transform.forward + Vector3.up * 0.6f, Vector3.one * 0.25f);
+		Collider[] colliders = Physics.OverlapBox(transform.position + transform.forward + Vector3.up * 0.6f, Vector3.one * 0.25f, Quaternion.identity, colliderMask.value);
 		forwardIsBlocked = colliders.Length > 0;
-		
+		box = null;
+		foreach(Collider coll in colliders)
+		{
+			box = coll.gameObject.GetComponent<Rigidbody>();
+			if (box) break;
+		}
 	}
 
 	private void OnDrawGizmos()

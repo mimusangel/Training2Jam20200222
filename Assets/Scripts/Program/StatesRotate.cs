@@ -24,7 +24,7 @@ public class StatesRotate : States
 			float elapse = Time.time - time;
 			percent = Mathf.Clamp01(elapse / t);
 			robot.transform.rotation = origin * Quaternion.AngleAxis(rotate * percent, Vector3.up);
-			yield return null;
+			yield return new WaitForEndOfFrame();
 		}
 		robot.transform.rotation = origin * Quaternion.AngleAxis(rotate * percent, Vector3.up);
 	}

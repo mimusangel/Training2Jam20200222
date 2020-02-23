@@ -25,7 +25,7 @@ public class StatesBackward: States
 			float elapse = Time.time - time;
 			float percent = elapse / t;
 			robot.transform.position = Vector3.Lerp(A, B, percent);
-			yield return null;
+			yield return new WaitForEndOfFrame();
 		}
 	}
 }

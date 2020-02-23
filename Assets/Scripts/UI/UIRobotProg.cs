@@ -234,7 +234,10 @@ public class UIRobotProg : MonoBehaviour
 		}
 		else if (state.GetType() == typeof(StatesIfElse))
 		{
-
+			go = Instantiate(Resources.Load<GameObject>("UI/InstructionIfElse"), parent);
+			UIInstructionIfThen ui = go.GetComponent<UIInstructionIfThen>();
+			ui.states = state as StatesIfElse;
+			ui.GenerateContent();
 		}
 		else if (state.GetType() == typeof(StatesRepeat))
 		{
@@ -313,6 +316,7 @@ public class UIRobotProg : MonoBehaviour
 				state = new StatesIf();
 				break;
 			case UINewTool.Tool.I_IfElse:
+				state = new StatesIfElse();
 				break;
 			case UINewTool.Tool.I_Paint:
 				break;
@@ -323,28 +327,38 @@ public class UIRobotProg : MonoBehaviour
 		return state;
 	}
 
-	public void DropInstruction(UIInstructionIfThen ui, States afterState)
+	public void DropInstruction(States stateParent, States afterState, bool isElse = false)
 	{
 		int index = 0;
 		if (afterState != null)
-			index = ui.states.ifProgram.IndexOf(afterState) + 1;
-		States state = MakeState();
-		if (state != null)
 		{
-			ui.states.AddInstruction(state, index);
-			ChangeProgram();
+			if (stateParent.GetType() == typeof(StatesIf))
+				index = (stateParent as StatesIf).ifProgram.IndexOf(afterState) + 1;
+			else if (stateParent.GetType() == typeof(StatesIfElse))
+			{
+				if (isElse)
+					index = (stateParent as StatesIfElse).elseProgram.IndexOf(afterState) + 1;
+				else
+					index = (stateParent as StatesIfElse).ifProgram.IndexOf(afterState) + 1;
+			}
+			else if (stateParent.GetType() == typeof(StatesRepeat))
+				index = (stateParent as StatesRepeat).ifProgram.IndexOf(afterState) + 1;
 		}
-	}
-
-	public void DropInstruction(UIInstructionRepeat ui, States afterState)
-	{
-		int index = 0;
-		if (afterState != null)
-			index = ui.states.ifProgram.IndexOf(afterState) + 1;
 		States state = MakeState();
 		if (state != null)
 		{
-			ui.states.AddInstruction(state, index);
+			if (stateParent.GetType() == typeof(StatesIf))
+				(stateParent as StatesIf).AddInstruction(state, index);
+			else if (stateParent.GetType() == typeof(StatesIfElse))
+			{
+				if (isElse)
+					(stateParent as StatesIfElse).AddInstructionElse(state, index);
+				else
+					(stateParent as StatesIfElse).AddInstruction(state, index);
+			}
+			else if (stateParent.GetType() == typeof(StatesRepeat))
+				(stateParent as StatesRepeat).AddInstruction(state, index);
+
 			ChangeProgram();
 		}
 	}
@@ -364,14 +378,14 @@ public class UIRobotProg : MonoBehaviour
 		UIInstructionIfContent content = parent.GetComponent<UIInstructionIfContent>();
 		if (content)
 		{
-			DropInstruction(content.ifThen, currentStates);
+			DropInstruction(content.ifThen.states, currentStates, content.isElse);
 		}
 		else
 		{
 			UIInstructionRepeatContent repeat = parent.GetComponent<UIInstructionRepeatContent>();
 			if (repeat)
 			{
-				DropInstruction(repeat.repeat, currentStates);
+				DropInstruction(repeat.repeat.states, currentStates, false);
 			}
 			else
 			{

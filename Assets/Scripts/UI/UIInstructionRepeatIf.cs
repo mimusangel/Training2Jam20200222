@@ -12,7 +12,7 @@ public class UIInstructionRepeatIf : MonoBehaviour, IDropHandler, IBeginDragHand
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(repeat, null);
+		UIRobotProg.Instance.DropInstruction(repeat.states, null, false);
 	}
 
 	public void OnBeginDrag(PointerEventData eventData)

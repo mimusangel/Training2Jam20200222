@@ -12,7 +12,7 @@ public class UIInstructionIf : MonoBehaviour, IDropHandler, IBeginDragHandler, I
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(ifThen, null);
+		UIRobotProg.Instance.DropInstruction(ifThen.states, null, false);
 	}
 
 	public void OnBeginDrag(PointerEventData eventData)
