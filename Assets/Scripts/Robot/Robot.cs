@@ -77,7 +77,6 @@ public class Robot : MonoBehaviour
 		{
 			foreach (States state in GetProgram("main"))
 			{
-				if (focusedRobot == this) UIMenu.Instance.stateText.text = state.ToString();
 				yield return state.Execute(this);
 				if (type == Statestype.Error)
 				{

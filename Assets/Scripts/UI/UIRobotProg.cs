@@ -68,6 +68,140 @@ public class UIRobotProg : MonoBehaviour
 		UIMenu.Instance.gameObject.SetActive(true);
 	}
 
+	public Block MakeBlock(Operator parent)
+	{
+		Block newBl = null;
+		switch (UINewTool.ToolDragAndDrop)
+		{
+			case UINewTool.Tool.B_True:
+				newBl = new Block(BlockType.Bool, true);
+				break;
+			case UINewTool.Tool.B_False:
+				newBl = new Block(BlockType.Bool, false);
+				break;
+			case UINewTool.Tool.B_DetectCollid:
+				newBl = new BlockDetectCollider();
+				break;
+		}
+		if (newBl != null)
+		{
+			newBl.parent = parent;
+		}
+		return newBl;
+	}
+
+	Operator MakeOpe()
+	{
+		Operator newOp = null;
+		switch (UINewTool.ToolDragAndDrop)
+		{
+			case UINewTool.Tool.O_And:
+				newOp = new OpAnd();
+				break;
+			case UINewTool.Tool.O_Or:
+				newOp = new OpOr();
+				break;
+			case UINewTool.Tool.O_Equal:
+				newOp = new OpEqual();
+				break;
+			case UINewTool.Tool.O_Inf:
+				newOp = new OpInf();
+				break;
+			case UINewTool.Tool.O_Sup:
+				newOp = new OpSup();
+				break;
+			case UINewTool.Tool.O_Not:
+				newOp = new OpNot();
+				break;
+			case UINewTool.Tool.O_Is:
+				newOp = new OpIs();
+				break;
+		}
+		return newOp;
+	}
+
+	public Operator MakeOperator(Operator parent)
+	{
+		Operator newOp = MakeOpe();
+		if (newOp != null)
+		{
+			newOp.parentOP = parent;
+		}
+		return newOp;
+	}
+
+	public Operator MakeOperator(States parent)
+	{
+		Operator newOp = MakeOpe();
+		if (newOp != null)
+		{
+			newOp.parentST = parent;
+		}
+		return newOp;
+	}
+
+	public GameObject MakeGameObjectOperator(Operator oper, Transform parent)
+	{
+		GameObject go = null;
+		if (oper == null) return go;
+		if (oper.GetType() == typeof(OpAnd))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorOP"), parent);
+			UIOperatorOP uiOp = go.GetComponent<UIOperatorOP>();
+			uiOp.operatorOP = oper;
+			uiOp.textOP.text = "And";
+			uiOp.GenerateContent();
+		}
+		else if (oper.GetType() == typeof(OpOr))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorOP"), parent);
+			UIOperatorOP uiOp = go.GetComponent<UIOperatorOP>();
+			uiOp.operatorOP = oper;
+			uiOp.textOP.text = "Or";
+			uiOp.GenerateContent();
+		}
+		else if (oper.GetType() == typeof(OpEqual))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorBlock"), parent);
+			UIOperatorBlock uiOp = go.GetComponent<UIOperatorBlock>();
+			uiOp.operatorBlock = oper;
+			uiOp.textOP.text = "=";
+			uiOp.GenerateContent();
+		}
+		else if (oper.GetType() == typeof(OpSup))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorBlock"), parent);
+			UIOperatorBlock uiOp = go.GetComponent<UIOperatorBlock>();
+			uiOp.operatorBlock = oper;
+			uiOp.textOP.text = ">";
+			uiOp.GenerateContent();
+		}
+		else if (oper.GetType() == typeof(OpInf))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorBlock"), parent);
+			UIOperatorBlock uiOp = go.GetComponent<UIOperatorBlock>();
+			uiOp.operatorBlock = oper;
+			uiOp.textOP.text = "<";
+			uiOp.GenerateContent();
+		}
+		else if (oper.GetType() == typeof(OpNot))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorNot"), parent);
+			UIOperatorNot uiOp = go.GetComponent<UIOperatorNot>();
+			uiOp.operatorOP = oper as OpNot;
+			uiOp.GenerateContent();
+		}
+		else if (oper.GetType() == typeof(OpIs))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/OperatorIs"), parent);
+			UIOperatorIS uiOp = go.GetComponent<UIOperatorIS>();
+			uiOp.operatorOP = oper as OpIs;
+			uiOp.GenerateContent();
+		}
+
+		return go;
+	}
+
 	public GameObject MakeGameObject(States state, Transform parent)
 	{
 		GameObject go = null;
@@ -101,6 +235,13 @@ public class UIRobotProg : MonoBehaviour
 		else if (state.GetType() == typeof(StatesIfElse))
 		{
 
+		}
+		else if (state.GetType() == typeof(StatesRepeat))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/InstructionRepeat"), parent);
+			UIInstructionRepeat ui = go.GetComponent<UIInstructionRepeat>();
+			ui.states = state as StatesRepeat;
+			ui.GenerateContent();
 		}
 		return go;
 	}
@@ -154,91 +295,93 @@ public class UIRobotProg : MonoBehaviour
 		DropInstruction(index/*, parent*/);
 	}
 
+	public States MakeState()
+	{
+		States state = null;
+		switch (UINewTool.ToolDragAndDrop)
+		{
+			case UINewTool.Tool.I_Forward:
+				state = new StatesForward();
+				break;
+			case UINewTool.Tool.I_Backward:
+				state = new StatesBackward();
+				break;
+			case UINewTool.Tool.I_Rotate:
+				state = new StatesRotate();
+				break;
+			case UINewTool.Tool.I_If:
+				state = new StatesIf();
+				break;
+			case UINewTool.Tool.I_IfElse:
+				break;
+			case UINewTool.Tool.I_Paint:
+				break;
+			case UINewTool.Tool.I_Repeat:
+				state = new StatesRepeat();
+				break;
+		}
+		return state;
+	}
+
 	public void DropInstruction(UIInstructionIfThen ui, States afterState)
 	{
 		int index = 0;
 		if (afterState != null)
 			index = ui.states.ifProgram.IndexOf(afterState) + 1;
-		States state = null;
-		switch (UINewTool.ToolDragAndDrop)
-		{
-			case UINewTool.Tool.I_Forward:
-				state = new StatesForward();
-				ui.states.AddInstruction(state, index);
-				break;
-			case UINewTool.Tool.I_Backward:
-				state = new StatesBackward();
-				ui.states.AddInstruction(state, index);
-				break;
-			case UINewTool.Tool.I_Rotate:
-				state = new StatesRotate();
-				ui.states.AddInstruction(state, index);
-				break;
-			case UINewTool.Tool.I_If:
-				state = new StatesIf();
-				ui.states.AddInstruction(state, index);
-				break;
-			case UINewTool.Tool.I_IfElse:
-				break;
-			case UINewTool.Tool.I_Paint:
-				break;
-		}
+		States state = MakeState();
 		if (state != null)
 		{
+			ui.states.AddInstruction(state, index);
 			ChangeProgram();
 		}
 	}
 
-	public void DropInstruction(int index/*, Transform parent*/)
+	public void DropInstruction(UIInstructionRepeat ui, States afterState)
 	{
-		States state = null;
-		//GameObject go = null;
-		switch (UINewTool.ToolDragAndDrop)
-		{
-			case UINewTool.Tool.I_Forward:
-				state = new StatesForward();
-				//go = MakeGameObject(state, parent);
-				robot.AddInstruction(currentProgram, state, index);
-				break;
-			case UINewTool.Tool.I_Backward:
-				state = new StatesBackward();
-				//go = MakeGameObject(state, parent);
-				robot.AddInstruction(currentProgram, state, index);
-				break;
-			case UINewTool.Tool.I_Rotate:
-				state = new StatesRotate();
-				//go = MakeGameObject(state, parent);
-				robot.AddInstruction(currentProgram, state, index);
-				break;
-			case UINewTool.Tool.I_If:
-				state = new StatesIf();
-				//go = MakeGameObject(state, parent);
-				robot.AddInstruction(currentProgram, state, index);
-				break;
-			case UINewTool.Tool.I_IfElse:
-				break;
-			case UINewTool.Tool.I_Paint:
-				break;
-		}
+		int index = 0;
+		if (afterState != null)
+			index = ui.states.ifProgram.IndexOf(afterState) + 1;
+		States state = MakeState();
 		if (state != null)
 		{
+			ui.states.AddInstruction(state, index);
 			ChangeProgram();
 		}
-		//if (go != null)
-		//{
-		//	if (index > -1 && index < contentItems.Count)
-		//	{
-		//		contentItems.Insert(index, go);
-		//	}
-		//	else
-		//		contentItems.Add(go);
-		//	if (index > -1)
-		//	{
-		//		for (int i = 0; i < contentItems.Count; i++)
-		//		{
-		//			contentItems[i].transform.SetSiblingIndex(contentItems[0].transform.GetSiblingIndex() + i);
-		//		}
-		//	}
-		//}
+	}
+
+	public void DropInstruction(int index)
+	{
+		States state = MakeState();
+		if (state != null)
+		{
+			robot.AddInstruction(currentProgram, state, index);
+			ChangeProgram();
+		}
+	}
+
+	public void DropInstruction(States currentStates, GameObject parent)
+	{
+		UIInstructionIfContent content = parent.GetComponent<UIInstructionIfContent>();
+		if (content)
+		{
+			DropInstruction(content.ifThen, currentStates);
+		}
+		else
+		{
+			UIInstructionRepeatContent repeat = parent.GetComponent<UIInstructionRepeatContent>();
+			if (repeat)
+			{
+				DropInstruction(repeat.repeat, currentStates);
+			}
+			else
+			{
+				DropInstruction(currentStates);
+			}
+		}
+	}
+
+	public void DeleteState(States state)
+	{
+		robot.DeleteInstruction(currentProgram, state);
 	}
 }

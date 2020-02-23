@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatesIf : States
+public class StatesRepeat : States
 {
 	public Operator condition = null;
 	public List<States> ifProgram = new List<States>();
 
-	public StatesIf(Operator cond = null)
+	public StatesRepeat(Operator cond = null)
 	{
 		this.condition = cond;
 	}
 
 	public override IEnumerator Execute(Robot robot)
 	{
-		if (condition != null && condition.Execute(robot))
+		if (condition != null)
 		{
-			foreach (States state in ifProgram)
+			while (condition.Execute(robot) && !robot.isError) 
 			{
-				yield return state.Execute(robot);
+				foreach (States state in ifProgram)
+				{
+					yield return state.Execute(robot);
+				}
+				yield return new WaitForEndOfFrame();
 			}
 		}
 	}

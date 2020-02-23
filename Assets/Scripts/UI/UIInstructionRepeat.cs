@@ -6,13 +6,13 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class UIInstructionIfThen : MonoBehaviour
+public class UIInstructionRepeat : MonoBehaviour
 {
 	public Transform contentTransform;
 	public UIOperator uIOperator;
 
 	[HideInInspector]
-	public StatesIf states = null;
+	public StatesRepeat states = null;
 
 	GameObject operatorItem = null;
 	List<GameObject> contentItems = new List<GameObject>();

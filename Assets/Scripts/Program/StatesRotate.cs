@@ -19,13 +19,14 @@ public class StatesRotate : States
 		float percent = 0.0f;
 		float time = Time.time;
 		
-		while (percent <= 1.0f)
+		while (percent < 1.0f)
 		{
 			float elapse = Time.time - time;
-			percent = elapse / t;
+			percent = Mathf.Clamp01(elapse / t);
 			robot.transform.rotation = origin * Quaternion.AngleAxis(rotate * percent, Vector3.up);
 			yield return null;
 		}
+		robot.transform.rotation = origin * Quaternion.AngleAxis(rotate * percent, Vector3.up);
 	}
 }
 

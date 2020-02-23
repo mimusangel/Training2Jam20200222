@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Linq;
 
-public class UIFonction : MonoBehaviour, IDropHandler
+public class UITrash : MonoBehaviour, IDropHandler
 {
-	public TextMeshProUGUI textInstruction;
-
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(0);
+		UIDragToTrash.ToTrash();
 	}
 }

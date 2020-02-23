@@ -4,22 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Linq;
 
-public class UIInstruction : MonoBehaviour, IDropHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class UIInstructionRepeatIf : MonoBehaviour, IDropHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-	public TextMeshProUGUI textInstruction;
-
-	[HideInInspector]
-	public States states;
+	public UIInstructionRepeat repeat;
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(states, transform.parent.gameObject);
+		UIRobotProg.Instance.DropInstruction(repeat, null);
 	}
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-		UIDragToTrash.StartDrag(states);
+		UIDragToTrash.StartDrag(repeat.states);
 	}
 
 	public void OnDrag(PointerEventData eventData)

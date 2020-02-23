@@ -27,4 +27,10 @@ public class OpInf : Operator
 		}
 		return false;
 	}
+
+	public override void RemoveChild(Block blo)
+	{
+		if (A == blo) A = null;
+		if (B == blo) B = null;
+	}
 }

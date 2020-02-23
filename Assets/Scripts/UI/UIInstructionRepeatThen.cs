@@ -6,12 +6,12 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class UIInstructionThen : MonoBehaviour, IDropHandler
+public class UIInstructionRepeatThen : MonoBehaviour, IDropHandler
 {
-	public UIInstructionIfThen ifThen;
+	public UIInstructionRepeat repeat;
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIRobotProg.Instance.DropInstruction(ifThen.states, ifThen.transform.parent.gameObject);
+		UIRobotProg.Instance.DropInstruction(repeat.states, repeat.transform.parent.gameObject);
 	}
 }

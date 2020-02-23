@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
+using System.Linq;
 
-public class UIBlock : MonoBehaviour
+public class UIBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	public TextMeshProUGUI textBlock;
 	[HideInInspector]
@@ -24,5 +27,20 @@ public class UIBlock : MonoBehaviour
 					break;
 			}
 		}
+	}
+
+	public void OnBeginDrag(PointerEventData eventData)
+	{
+		UIDragToTrash.StartDrag(block);
+	}
+
+	public void OnDrag(PointerEventData eventData)
+	{
+
+	}
+
+	public void OnEndDrag(PointerEventData eventData)
+	{
+		UIDragToTrash.EndDrag();
 	}
 }

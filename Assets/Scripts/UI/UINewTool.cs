@@ -17,6 +17,7 @@ public class UINewTool : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		I_If,
 		I_IfElse,
 		I_Paint,
+		I_Repeat,
 
 		O_Or = 100,
 		O_And,
@@ -24,6 +25,7 @@ public class UINewTool : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		O_Equal,
 		O_Sup,
 		O_Inf,
+		O_Is,
 
 		B_True = 200,
 		B_False,

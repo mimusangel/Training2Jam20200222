@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class UIOperatorBlock : MonoBehaviour
+public class UIOperatorBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	public Operator operatorBlock;
 	public TextMeshProUGUI textOP;
@@ -82,46 +82,45 @@ public class UIOperatorBlock : MonoBehaviour
 		}
 	}
 
-	Block MakeBlock(Operator parent)
-	{
-		Block newBl = null;
-		switch (UINewTool.ToolDragAndDrop)
-		{
-			case UINewTool.Tool.B_True:
-				newBl = new Block(BlockType.Bool, true);
-				break;
-			case UINewTool.Tool.B_False:
-				newBl = new Block(BlockType.Bool, false);
-				break;
-			case UINewTool.Tool.B_DetectCollid:
-				newBl = new BlockDetectCollider();
-				break;
-		}
-		return newBl;
-	}
+	
 
 	public void DropOperator(int index)
 	{
 		if (operatorBlock.GetType() == typeof(OpEqual))
 		{
 			OpEqual ope = operatorBlock as OpEqual;
-			if (index == 0 && ope.A == null) ope.A = MakeBlock(ope);
-			if (index == 1 && ope.B == null) ope.B = MakeBlock(ope);
+			if (index == 0 && ope.A == null) ope.A = UIRobotProg.Instance.MakeBlock(ope);
+			if (index == 1 && ope.B == null) ope.B = UIRobotProg.Instance.MakeBlock(ope);
 		}
 		else if (operatorBlock.GetType() == typeof(OpInf))
 		{
 			OpInf ope = operatorBlock as OpInf;
-			if (index == 0 && ope.A == null) ope.A = MakeBlock(ope);
-			if (index == 1 && ope.B == null) ope.B = MakeBlock(ope);
+			if (index == 0 && ope.A == null) ope.A = UIRobotProg.Instance.MakeBlock(ope);
+			if (index == 1 && ope.B == null) ope.B = UIRobotProg.Instance.MakeBlock(ope);
 
 		}
 		else if (operatorBlock.GetType() == typeof(OpSup))
 		{
 			OpSup ope = operatorBlock as OpSup;
-			if (index == 0 && ope.A == null) ope.A = MakeBlock(ope);
-			if (index == 1 && ope.B == null) ope.B = MakeBlock(ope);
+			if (index == 0 && ope.A == null) ope.A = UIRobotProg.Instance.MakeBlock(ope);
+			if (index == 1 && ope.B == null) ope.B = UIRobotProg.Instance.MakeBlock(ope);
 
 		}
 		UIRobotProg.Instance.ChangeProgram();
+	}
+
+	public void OnBeginDrag(PointerEventData eventData)
+	{
+		UIDragToTrash.StartDrag(operatorBlock);
+	}
+
+	public void OnDrag(PointerEventData eventData)
+	{
+
+	}
+
+	public void OnEndDrag(PointerEventData eventData)
+	{
+		UIDragToTrash.EndDrag();
 	}
 }

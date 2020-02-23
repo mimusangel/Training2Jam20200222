@@ -17,4 +17,9 @@ public class OpNot : Operator
 		if (A == null) return false;
 		return !(A.Execute(robot));
 	}
+
+	public override void RemoveChild(Operator ope)
+	{
+		if (A == ope) A = null;
+	}
 }

@@ -19,4 +19,10 @@ public class OpOr: Operator
 		if (A == null || B == null) return false;
 		return A.Execute(robot) || B.Execute(robot);
 	}
+
+	public override void RemoveChild(Operator ope)
+	{
+		if (A == ope) A = null;
+		if (B == ope) B = null;
+	}
 }

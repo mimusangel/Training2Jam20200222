@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class UIInstructionRotate : MonoBehaviour, IDropHandler
+public class UIInstructionRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	public TMP_Dropdown rotateDD;
 
@@ -39,14 +39,21 @@ public class UIInstructionRotate : MonoBehaviour, IDropHandler
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		UIInstructionIfContent content = transform.parent.gameObject.GetComponent<UIInstructionIfContent>();
-		if (content)
-		{
-			UIRobotProg.Instance.DropInstruction(content.ifThen, states);
-		}
-		else
-		{
-			UIRobotProg.Instance.DropInstruction(states);
-		}
+		UIRobotProg.Instance.DropInstruction(states, transform.parent.gameObject);
+	}
+
+	public void OnBeginDrag(PointerEventData eventData)
+	{
+		UIDragToTrash.StartDrag(states);
+	}
+
+	public void OnDrag(PointerEventData eventData)
+	{
+
+	}
+
+	public void OnEndDrag(PointerEventData eventData)
+	{
+		UIDragToTrash.EndDrag();
 	}
 }

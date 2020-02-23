@@ -8,4 +8,7 @@ public abstract class Operator
 	public States parentST = null;
 
 	public abstract bool Execute(Robot robot);
+
+	public virtual void RemoveChild(Operator ope) { }
+	public virtual void RemoveChild(Block blo) { }
 }
