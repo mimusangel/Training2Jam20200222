@@ -49,6 +49,10 @@ public class Robot : MonoBehaviour
 	public LayerMask colliderMask;
 	public Rigidbody box = null;
 
+	public LayerMask paintMask;
+	public PaintStain paintStain = null;
+	public PaintStain paintStainForward = null;
+
 	void Start()
     {
 		robotRigidbody = GetComponent<Rigidbody>();
@@ -69,6 +73,20 @@ public class Robot : MonoBehaviour
 		{
 			box = coll.gameObject.GetComponent<Rigidbody>();
 			if (box) break;
+		}
+		paintStain = null;
+		colliders = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, paintMask.value);
+		foreach (Collider coll in colliders)
+		{
+			paintStain = coll.gameObject.GetComponent<PaintStain>();
+			if (paintStain != null) break;
+		}
+		paintStainForward = null;
+		colliders = Physics.OverlapBox(transform.position + transform.forward, Vector3.one * 0.25f, Quaternion.identity, paintMask.value);
+		foreach (Collider coll in colliders)
+		{
+			paintStainForward = coll.gameObject.GetComponent<PaintStain>();
+			if (paintStainForward != null) break;
 		}
 	}
 

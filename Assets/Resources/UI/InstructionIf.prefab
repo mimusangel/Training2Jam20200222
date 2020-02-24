@@ -252,7 +252,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 7
     m_Bottom: 7
-  m_ChildAlignment: 0
+  m_ChildAlignment: 3
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
@@ -468,6 +468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentTransform: {fileID: 1445528937449815979}
+  contentElseTransform: {fileID: 0}
   uIOperator: {fileID: 321732345}
 --- !u!1 &1445528936639832741
 GameObject:
@@ -731,8 +732,8 @@ MonoBehaviour:
     m_Right: 1
     m_Top: 1
     m_Bottom: 1
-  m_ChildAlignment: 0
-  m_Spacing: 0
+  m_ChildAlignment: 4
+  m_Spacing: 2
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -867,8 +868,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 1
-  m_VerticalFit: 1
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!114 &6730938525822440655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,3 +883,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ifThen: {fileID: 7341486034709122269}
+  isElse: 0

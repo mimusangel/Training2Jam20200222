@@ -23,6 +23,8 @@ public class OpSup: Operator
 			{
 				case BlockType.Bool:
 					return A.GetBool(robot) != B.GetBool(robot);
+				case BlockType.Color:
+					return A.GetColor(robot) != B.GetColor(robot);
 			}
 		}
 		return false;

@@ -9,14 +9,21 @@ using System.Linq;
 public class UIBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	public TextMeshProUGUI textBlock;
+	public TMP_Dropdown dropdown;
+
 	[HideInInspector]
 	public Block block;
 
 	private void Start()
 	{
+		dropdown.gameObject.SetActive(false);
 		if (block.GetType() == typeof(BlockDetectCollider))
 		{
 			textBlock.text = "Detection de la Collision";
+		}
+		else if (block.GetType() == typeof(BlockDetectColor))
+		{
+			textBlock.text = "Detection de la Couleur";
 		}
 		else
 		{
@@ -25,7 +32,24 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
 				case BlockType.Bool:
 					textBlock.text = block.GetBool() ? "True" : "False";
 					break;
+				case BlockType.Color:
+					textBlock.text = "Couleur";
+					dropdown.gameObject.SetActive(true);
+					dropdown.ClearOptions();
+					List<string> colors = StatesColorExtends.ToList();
+					dropdown.AddOptions(colors);
+					StatesColor.StatesColorType color = block.GetColor();
+					dropdown.SetValueWithoutNotify((int)color);
+					break;
 			}
+		}
+	}
+
+	public void SelectDropdown()
+	{
+		if (block.type == BlockType.Color)
+		{
+			block.SetColor((StatesColor.StatesColorType)dropdown.value);
 		}
 	}
 

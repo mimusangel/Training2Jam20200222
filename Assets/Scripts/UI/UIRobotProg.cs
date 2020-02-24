@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Linq;
 
 public class UIRobotProg : MonoBehaviour
 {
@@ -81,6 +80,12 @@ public class UIRobotProg : MonoBehaviour
 				break;
 			case UINewTool.Tool.B_DetectCollid:
 				newBl = new BlockDetectCollider();
+				break;
+			case UINewTool.Tool.B_Color:
+				newBl = new Block(BlockType.Color, StatesColor.StatesColorType.White);
+				break;
+			case UINewTool.Tool.B_DetectColor:
+				newBl = new BlockDetectColor();
 				break;
 		}
 		if (newBl != null)
@@ -246,6 +251,12 @@ public class UIRobotProg : MonoBehaviour
 			ui.states = state as StatesRepeat;
 			ui.GenerateContent();
 		}
+		else if (state.GetType() == typeof(StatesColor))
+		{
+			go = Instantiate(Resources.Load<GameObject>("UI/InstructionColor"), parent);
+			UIInstructionColor ui = go.GetComponent<UIInstructionColor>();
+			ui.states = state as StatesColor;
+		}
 		return go;
 	}
 
@@ -319,6 +330,7 @@ public class UIRobotProg : MonoBehaviour
 				state = new StatesIfElse();
 				break;
 			case UINewTool.Tool.I_Paint:
+				state = new StatesColor();
 				break;
 			case UINewTool.Tool.I_Repeat:
 				state = new StatesRepeat();

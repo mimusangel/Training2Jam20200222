@@ -6,40 +6,31 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class UIInstructionRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class UIInstructionColor : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-	public TMP_Dropdown rotateDD;
-
-	private float[] angles = { 90.0f, 180.0f, -90.0f };
+	public TMP_Dropdown colorDD;
 
 	[HideInInspector]
-	public StatesRotate states = null;
+	public StatesColor states = null;
 
 	private void Start()
 	{
-		rotateDD.ClearOptions();
-		rotateDD.AddOptions(angles.Select((x) => Mathf.RoundToInt(x).ToString()).ToList<string>());
-		for (int i = 0; i < angles.Length; i++)
-		{
-			if (angles[i] == states.rotate)
-			{
-				rotateDD.SetValueWithoutNotify(i);
-				break;
-			}
-		}
+		colorDD.ClearOptions();
+		List<string> colors = StatesColorExtends.ToList();
+		colorDD.AddOptions(colors);
+		colorDD.SetValueWithoutNotify((int)states.color);
 	}
 
 	public void SelectDropdown()
 	{
 		if (states != null)
 		{
-			states.rotate = angles[rotateDD.value];
+			states.color = (StatesColor.StatesColorType)colorDD.value;
 		}
 	}
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		Debug.Log("ICI");
 		UIRobotProg.Instance.DropInstruction(states, transform.parent.gameObject);
 	}
 

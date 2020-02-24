@@ -18,6 +18,14 @@ public class UIOperatorBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	[HideInInspector]
 	public GameObject bGo;
 	
+	public GameObject MakeGameObjectBlock(Block block, Transform parent)
+	{
+		GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), parent);
+		UIBlock ui = go.GetComponent<UIBlock>();
+		ui.block = block;
+		return go;
+	}
+
 	public void GenerateContent()
 	{
 		if (aGo != null)
@@ -33,52 +41,21 @@ public class UIOperatorBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 		if (operatorBlock.GetType() == typeof(OpEqual))
 		{
 			OpEqual ope = operatorBlock as OpEqual;
-			if (ope.A != null)
-			{
-				GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), aTransform);
-				UIBlock ui = go.GetComponent<UIBlock>();
-				ui.block = ope.A;
-			}
-			if (ope.B != null)
-			{
-				GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), bTransform);
-				UIBlock ui = go.GetComponent<UIBlock>();
-				ui.block = ope.B;
-			}
+			if (ope.A != null) aGo = MakeGameObjectBlock(ope.A, aTransform);
+			if (ope.B != null) bGo = MakeGameObjectBlock(ope.B, bTransform);
 		}
 		else if (operatorBlock.GetType() == typeof(OpInf))
 		{
 			OpInf ope = operatorBlock as OpInf;
-			if (ope.A != null)
-			{
-				GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), aTransform);
-				UIBlock ui = go.GetComponent<UIBlock>();
-				ui.block = ope.A;
-			}
-			if (ope.B != null)
-			{
-				GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), bTransform);
-				UIBlock ui = go.GetComponent<UIBlock>();
-				ui.block = ope.B;
-			}
+			if (ope.A != null) aGo = MakeGameObjectBlock(ope.A, aTransform);
+			if (ope.B != null) bGo = MakeGameObjectBlock(ope.B, bTransform);
 
 		}
 		else if (operatorBlock.GetType() == typeof(OpSup))
 		{
 			OpSup ope = operatorBlock as OpSup;
-			if (ope.A != null)
-			{
-				GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), aTransform);
-				UIBlock ui = go.GetComponent<UIBlock>();
-				ui.block = ope.A;
-			}
-			if (ope.B != null)
-			{
-				GameObject go = Instantiate(Resources.Load<GameObject>("UI/Block"), bTransform);
-				UIBlock ui = go.GetComponent<UIBlock>();
-				ui.block = ope.B;
-			}
-
+			if (ope.A != null) aGo = MakeGameObjectBlock(ope.A, aTransform);
+			if (ope.B != null) bGo = MakeGameObjectBlock(ope.B, bTransform);
 		}
 	}
 
